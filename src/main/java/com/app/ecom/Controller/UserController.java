@@ -1,5 +1,7 @@
-package com.app.ecom;
+package com.app.ecom.Controller;
 
+import com.app.ecom.Model.User;
+import com.app.ecom.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.app.ecom;
+package com.app.ecom.Model;
 
 
 import jakarta.persistence.Entity;
