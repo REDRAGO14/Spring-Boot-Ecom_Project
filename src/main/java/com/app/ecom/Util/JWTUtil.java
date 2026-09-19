@@ -1,5 +1,6 @@
 package com.app.ecom.Util;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -28,6 +29,16 @@ public class JWTUtil {
                 .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSecretKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+    private Claims getClaims(String token){
+        return Jwts.parser()
+                .verifyWith(getSecretKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+    public String extractUsername(String token) {
+        return getClaims(token).getSubject();
     }
 }
 
