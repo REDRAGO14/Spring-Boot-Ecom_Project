@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -39,6 +40,17 @@ public class JWTUtil {
     }
     public String extractUsername(String token) {
         return getClaims(token).getSubject();
+    }
+
+    public boolean validateToken(String username, UserDetails userDetails, String token) {
+        if(username.equals(userDetails.getUsername())&& !isTokenExpired(token)){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isTokenExpired(String token) {
+        return getClaims(token).getExpiration().before(new Date());
     }
 }
 
