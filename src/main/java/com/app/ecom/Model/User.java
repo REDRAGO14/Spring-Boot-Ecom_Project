@@ -25,7 +25,6 @@ public class User implements UserDetails {
     private String lastName;
     private String email;
     private String phone;
-    private String catagory;
     private UserRole role = UserRole.CUSTOMER;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
