@@ -7,6 +7,7 @@ import com.app.ecom.Model.Address;
 import com.app.ecom.Model.User;
 import com.app.ecom.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,12 @@ import java.util.stream.Collectors;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     public List<UserResponse> fetchAllUsers(){
         return userRepository.findAll().stream()
                 .map(this::mapToUserResponse)
@@ -48,6 +55,8 @@ public class UserService {
         user.setLastName(userRequest.getLastName());
         user.setPhone(userRequest.getPhone());
         user.setEmail(userRequest.getEmail());
+        user.setUsername(userRequest.getUsername());
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         if(userRequest.getAddress() != null){
             Address address = new Address();
             address.setCity(userRequest.getAddress().getCity());
@@ -62,6 +71,7 @@ public class UserService {
     public UserResponse mapToUserResponse(User user){
         UserResponse response = new UserResponse();
         response.setId(user.getId());
+        response.setUsername(user.getUsername());
         response.setPhone(user.getPhone());
         response.setLastName(user.getLastName());
         response.setEmail(user.getEmail());
