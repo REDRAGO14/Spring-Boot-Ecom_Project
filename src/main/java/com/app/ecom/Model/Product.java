@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity(name = "products")
@@ -21,7 +21,7 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-    private BigInteger price;
+    private BigDecimal price;
     private Integer stockQuantity;
     private String catagory;
     private String imageUrl;

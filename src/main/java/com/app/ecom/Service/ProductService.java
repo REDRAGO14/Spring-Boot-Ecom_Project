@@ -33,16 +33,17 @@ public class ProductService {
     }
 
     private ProductResponse mapToProductResponse(Product savedProduct) {
-        ProductResponse response = new ProductResponse();
-        response.setId(savedProduct.getId());
-        response.setName(savedProduct.getName());
-        response.setDescription(savedProduct.getDescription());
-        response.setPrice(savedProduct.getPrice());
-        response.setStockQuantity(savedProduct.getStockQuantity());
-        response.setImageUrl(savedProduct.getImageUrl());
-        response.setActive(savedProduct.isActive());
-        response.setCatagory(savedProduct.getCatagory());
-        return response;
+        return new ProductResponse(
+                savedProduct.getId(),
+                savedProduct.getName(),
+                savedProduct.getDescription(),
+                savedProduct.getPrice(),
+                savedProduct.getStockQuantity(),
+                savedProduct.getCatagory(),
+                savedProduct.getImageUrl(),
+                savedProduct.isActive()
+        );
+
     }
 
     public Optional<ProductResponse> update(Long id, ProductRequest productRequest) {

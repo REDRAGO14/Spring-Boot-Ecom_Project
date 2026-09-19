@@ -2,16 +2,14 @@ package com.app.ecom.DTO;
 
 import lombok.Data;
 
-import java.math.BigInteger;
-
-@Data
-public class ProductResponse {
-    private Long id;
-    private String name;
-    private String description;
-    private BigInteger price;
-    private Integer stockQuantity;
-    private String catagory;
-    private String imageUrl;
-    private boolean active;
-}
+import java.math.BigDecimal;
+public record ProductResponse (
+    Long id,
+    String name,
+    String description,
+    BigDecimal price,
+    Integer stockQuantity,
+    String catagory,
+    String imageUrl,
+    boolean active
+){}
