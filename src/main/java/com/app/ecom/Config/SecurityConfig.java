@@ -1,5 +1,6 @@
 package com.app.ecom.Config;
 
+import com.app.ecom.Filter.JWTFilter;
 import com.app.ecom.Repository.UserRepository;
 import com.app.ecom.Service.CustomUserDetailService;
 import org.springframework.context.annotation.Bean;
@@ -16,15 +17,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
 @Component
 @EnableWebSecurity
 public class SecurityConfig {
     private final UserRepository userRepository;
+    private final JWTFilter jwtFilter;
 
-    public SecurityConfig(UserRepository userRepository) {
+    public SecurityConfig(UserRepository userRepository, JWTFilter jwtFilter) {
         this.userRepository = userRepository;
+        this.jwtFilter = jwtFilter;
     }
 
     @Bean
@@ -40,8 +44,8 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/products").permitAll()
                         .requestMatchers("/api/authentication/login").permitAll()
-                        .anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults());
+                        .anyRequest().authenticated());
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
     @Bean
