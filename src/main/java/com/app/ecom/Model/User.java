@@ -21,13 +21,15 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private UserRole role = UserRole.CUSTOMER;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
     @CreationTimestamp
@@ -42,12 +44,12 @@ public class User implements UserDetails {
 
     @Override
     public @Nullable String getPassword() {
-        return "";
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return username;
     }
 
     @Override
